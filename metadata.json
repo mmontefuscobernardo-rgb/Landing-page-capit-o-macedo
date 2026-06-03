@@ -1,0 +1,6 @@
+{
+  "name": "Capitão Macedo - Landing Page e CRM",
+  "description": "Landing page de pré-campanha de Capitão Macedo para Deputado Estadual (Podemos-RS), com apresentação de propostas, biografia detalhada e CRM integrado para captura e gestão de contatos de eleitores.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
