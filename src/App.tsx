@@ -410,57 +410,60 @@ export default function App() {
             </div>
 
             {/* HERO RIGHT - CANDIDATE PHOTO WITH RS FLAG & PARTY BADGE DECOR */}
-            <div className="lg:col-span-5 relative mt-8 lg:mt-0 flex justify-center">
+            <div className="lg:col-span-5 mt-8 lg:mt-0 flex justify-center w-full">
               
-              {/* Solid Frame with Rio Grande do Sul design colors around portrait */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-rs-green/35 via-rs-red/35 to-rs-yellow/35 rounded-2xl scale-[1.01] pointer-events-none"></div>
-              
-              {/* Outer frame containing candidate photo */}
-              <div className="relative bg-gradient-to-b from-slate-800 to-podemos-dark/60 p-2.5 rounded-2xl border border-slate-700 shadow-2xl max-w-sm w-full mx-auto z-10 overflow-hidden">
+              {/* Sizing wrapper with exact boundary limits */}
+              <div className="relative max-w-sm w-full mx-auto">
+                {/* Solid Frame with Rio Grande do Sul design colors around portrait - perfectly aligned via container borders */}
+                <div className="absolute -inset-0.5 bg-gradient-to-tr from-rs-green/35 via-rs-red/35 to-rs-yellow/35 rounded-2xl pointer-events-none"></div>
                 
-                {/* Floating Big badge of "PODEMOS 20" */}
-                <div className="absolute top-4 left-4 bg-podemos-dark/98 text-white p-2 rounded-xl flex items-center gap-2 border border-slate-700 shadow-md z-20">
-                  <PodemosRsLogo className="w-10 h-10" />
-                  <div className="text-left font-display">
-                    <span className="text-[9px] uppercase font-bold text-slate-400 block tracking-wider">Partido</span>
-                    <span className="text-sm font-black text-rs-yellow leading-none uppercase">PODEMOS</span>
-                  </div>
-                </div>
-
-                {/* Candidate main photograph */}
-                <div className="rounded-xl overflow-hidden aspect-square bg-slate-900 border border-slate-750 relative select-none">
-                  <img 
-                    src={candidateImage} 
-                    alt="Capitão Macedo, pré-candidato a deputado estadual"
-                    className="w-full h-full object-cover transition-transform duration-300 md:hover:scale-105"
-                    referrerPolicy="no-referrer"
-                    id="img-hero-candidate"
-                  />
-                  {/* Tri-color flag stripe overlay */}
-                  <div className="absolute bottom-0 inset-x-0 h-2 flex z-10">
-                    <div className="flex-1 bg-rs-green"></div>
-                    <div className="flex-1 bg-rs-red"></div>
-                    <div className="flex-1 bg-rs-yellow"></div>
-                  </div>
-                </div>
-
-                {/* Legend container beneath photograph */}
-                <div className="pt-3.5 pb-2 px-3 text-center sm:text-left">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
-                    <div>
-                      <h3 className="font-display font-extrabold text-white text-lg leading-tight">
-                        CAPITÃO MACEDO
-                      </h3>
-                      <p className="text-xs text-slate-350">
-                        Professor Universitário & Capitão da Brigada
-                      </p>
-                    </div>
-                    <div className="bg-rs-yellow/10 text-rs-yellow border border-rs-yellow/20 px-2.5 py-1 rounded text-xs font-black self-center sm:self-auto uppercase tracking-wider">
-                      PODEMOS 20
+                {/* Outer frame containing candidate photo */}
+                <div className="relative bg-gradient-to-b from-slate-800 to-podemos-dark/60 p-2.5 rounded-2xl border border-slate-700 shadow-2xl w-full z-10 overflow-hidden">
+                  
+                  {/* Floating Big badge of "PODEMOS 20" */}
+                  <div className="absolute top-4 left-4 bg-podemos-dark/98 text-white p-2 rounded-xl flex items-center gap-2 border border-slate-700 shadow-md z-20">
+                    <PodemosRsLogo className="w-10 h-10" />
+                    <div className="text-left font-display">
+                      <span className="text-[9px] uppercase font-bold text-slate-400 block tracking-wider">Partido</span>
+                      <span className="text-sm font-black text-rs-yellow leading-none uppercase">PODEMOS</span>
                     </div>
                   </div>
-                </div>
 
+                  {/* Candidate main photograph */}
+                  <div className="rounded-xl overflow-hidden aspect-square bg-slate-900 border border-slate-750 relative select-none">
+                    <img 
+                      src={candidateImage} 
+                      alt="Capitão Macedo, pré-candidato a deputado estadual"
+                      className="w-full h-full object-cover transition-transform duration-300 md:hover:scale-105"
+                      referrerPolicy="no-referrer"
+                      id="img-hero-candidate"
+                    />
+                    {/* Tri-color flag stripe overlay */}
+                    <div className="absolute bottom-0 inset-x-0 h-2 flex z-10">
+                      <div className="flex-1 bg-rs-green"></div>
+                      <div className="flex-1 bg-rs-red"></div>
+                      <div className="flex-1 bg-rs-yellow"></div>
+                    </div>
+                  </div>
+
+                  {/* Legend container beneath photograph */}
+                  <div className="pt-3.5 pb-2 px-3 text-center sm:text-left">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                      <div>
+                        <h3 className="font-display font-extrabold text-white text-lg leading-tight">
+                          CAPITÃO MACEDO
+                        </h3>
+                        <p className="text-xs text-slate-350">
+                          Professor Universitário & Capitão da Brigada
+                        </p>
+                      </div>
+                      <div className="bg-rs-yellow/10 text-rs-yellow border border-rs-yellow/20 px-2.5 py-1 rounded text-xs font-black self-center sm:self-auto uppercase tracking-wider">
+                        PODEMOS 20
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
               </div>
 
             </div>
