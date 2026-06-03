@@ -5,6 +5,7 @@ import {
   Save, CheckCircle, Clock, MapPin, 
   Lock, Unlock, Shield, Calendar, RefreshCw, X, MessageSquare, Tag, FileText
 } from "lucide-react";
+import { leadsService } from "../services/leadsService";
 
 interface CrmDashboardProps {
   onClose?: () => void;
@@ -37,14 +38,10 @@ export default function CrmDashboard({ onClose }: CrmDashboardProps) {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("/api/leads");
-      if (!response.ok) {
-        throw new Error("Não foi possível carregar os contatos do servidor.");
-      }
-      const data = await response.json();
+      const data = await leadsService.getLeads();
       setLeads(data);
     } catch (err: any) {
-      setError(err?.message || "Algo deu errado ao se comunicar com o servidor.");
+      setError(err?.message || "Algo deu errado ao se comunicar com o banco de contatos.");
     } finally {
       setLoading(false);
     }
@@ -68,22 +65,10 @@ export default function CrmDashboard({ onClose }: CrmDashboardProps) {
 
   const handleUpdateLead = async (leadId: string) => {
     try {
-      const response = await fetch(`/api/leads/${leadId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          status: editStatus,
-          notes: editNotes,
-        }),
+      const updated = await leadsService.updateLead(leadId, {
+        status: editStatus,
+        notes: editNotes,
       });
-
-      if (!response.ok) {
-        throw new Error("Erro ao atualizar dados.");
-      }
-
-      const updated = await response.json();
       
       // Update local state
       setLeads(leads.map(lead => lead.id === leadId ? updated : lead));
@@ -99,14 +84,7 @@ export default function CrmDashboard({ onClose }: CrmDashboardProps) {
     }
 
     try {
-      const response = await fetch(`/api/leads/${leadId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error("Erro ao excluir contato do servidor.");
-      }
-
+      await leadsService.deleteLead(leadId);
       // Update state
       setLeads(leads.filter(lead => lead.id !== leadId));
     } catch (err: any) {
@@ -195,7 +173,7 @@ export default function CrmDashboard({ onClose }: CrmDashboardProps) {
 
   if (!isAuthenticated) {
     return (
-      <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
+      <div className="fixed inset-0 bg-slate-950/85 flex items-center justify-center p-4 z-50 animate-fade-in">
         <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md shadow-2xl relative border border-slate-100">
           <button 
             onClick={onClose}
@@ -255,7 +233,7 @@ export default function CrmDashboard({ onClose }: CrmDashboardProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-slate-900/65 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 z-50 overflow-hidden">
+    <div className="fixed inset-0 bg-slate-950/75 flex items-center justify-center p-2 sm:p-4 z-50 overflow-hidden">
       <div className="bg-slate-50 rounded-2xl w-full max-w-6xl h-[95vh] sm:h-[90vh] shadow-2xl flex flex-col overflow-hidden border border-slate-200">
         
         {/* CRM HEADER */}

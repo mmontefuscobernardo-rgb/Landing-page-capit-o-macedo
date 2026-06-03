@@ -8,6 +8,7 @@ import {
 import { Lead, LegislativeProject, ParliamentaryFront } from "./types";
 import { CANDIDATE_INFO, LEGISLATIVE_PROJECTS, PARLIAMENTARY_FRONTS, MUNICIPALITIES_SERVED, CAMPAIGN_FLAGS } from "./data";
 import CrmDashboard from "./components/CrmDashboard";
+import { leadsService } from "./services/leadsService";
 
 // Import candidate campaign portrait generated in previous step
 import candidateImage from "./assets/images/capitao_macedo_correto_1780458885720.png";
@@ -81,7 +82,7 @@ export default function App() {
     setFormPhone(formatted);
   };
 
-  // Submit Lead via fetch to Express API
+  // Submit Lead via leadsService (handles local storage fallback on static environments)
   const handleSubmitLead = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
@@ -101,25 +102,14 @@ export default function App() {
     }
 
     try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formName,
-          email: formEmail,
-          whatsapp: formPhone,
-          city: formCity,
-          bannertype: formBanner,
-          notes: formOpinion || "Cadastro voluntário via Landing Page."
-        }),
+      await leadsService.addLead({
+        name: formName,
+        email: formEmail,
+        whatsapp: formPhone,
+        city: formCity,
+        bannertype: formBanner,
+        notes: formOpinion || "Cadastro voluntário via Landing Page."
       });
-
-      if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData?.error || "Ocorreu um erro ao enviar.");
-      }
 
       setSubmitSuccess(true);
       // Clear form
@@ -243,7 +233,7 @@ export default function App() {
 
       {/* MOBILE DRAWER */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 md:hidden animate-fade-in" id="mobile-drawer">
+        <div className="fixed inset-0 bg-slate-950/95 z-50 md:hidden animate-fade-in" id="mobile-drawer">
           <div className="bg-podemos-dark text-white w-4/5 max-w-sm h-full p-6 flex flex-col justify-between border-r border-slate-800">
             <div className="space-y-6">
               <div className="flex justify-between items-center">
@@ -348,10 +338,10 @@ export default function App() {
       {/* 3. HERO SECTION (TELA INICIAL) */}
       <section id="inicio" className="bg-gradient-to-br from-podemos-dark via-slate-900 to-podemos-dark text-white relative overflow-hidden py-10 md:py-16 lg:py-20">
         
-        {/* Subtle decorative background - Rio Grande do Sul colors in glow */}
-        <div className="absolute top-1/4 right-0 w-80 h-80 bg-rs-green/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-rs-red/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-rs-yellow/5 rounded-full blur-3xl pointer-events-none"></div>
+        {/* Subtle decorative background - Rio Grande do Sul colors in high-performance gradients (no hardware-intensive blur filters) */}
+        <div className="absolute top-1/4 right-0 w-80 h-80 bg-[radial-gradient(circle_at_center,rgba(0,150,57,0.12)_0%,transparent_70%)] pointer-events-none"></div>
+        <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-[radial-gradient(circle_at_center,rgba(218,41,28,0.12)_0%,transparent_70%)] pointer-events-none"></div>
+        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-[radial-gradient(circle_at_center,rgba(255,205,0,0.06)_0%,transparent_70%)] pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
@@ -428,13 +418,13 @@ export default function App() {
             <div className="lg:col-span-5 relative mt-8 lg:mt-0 flex justify-center">
               
               {/* Solid Frame with Rio Grande do Sul design colors around portrait */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-rs-green via-rs-red to-rs-yellow opacity-20 rounded-2xl rotate-3 scale-102 filter blur-sm pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-rs-green via-rs-red to-rs-yellow opacity-20 rounded-2xl rotate-3 scale-102 pointer-events-none"></div>
               
               {/* Outer frame containing candidate photo */}
-              <div className="relative bg-gradient-to-b from-slate-800 to-podemos-dark/60 p-2.5 rounded-2xl border border-slate-705 shadow-2xl max-w-sm w-full mx-auto animate-fade-in z-10 overflow-hidden">
+              <div className="relative bg-gradient-to-b from-slate-800 to-podemos-dark/60 p-2.5 rounded-2xl border border-slate-700 shadow-2xl max-w-sm w-full mx-auto animate-fade-in z-10 overflow-hidden">
                 
                 {/* Floating Big badge of "PODEMOS 20" */}
-                <div className="absolute top-4 left-4 bg-podemos-dark/95 text-white p-2 rounded-xl flex items-center gap-2 border border-slate-700 shadow-md backdrop-blur-sm z-20">
+                <div className="absolute top-4 left-4 bg-podemos-dark/98 text-white p-2 rounded-xl flex items-center gap-2 border border-slate-700 shadow-md z-20">
                   <PodemosRsLogo className="w-10 h-10" />
                   <div className="text-left font-display">
                     <span className="text-[9px] uppercase font-bold text-slate-400 block tracking-wider">Partido</span>
