@@ -336,13 +336,8 @@ export default function App() {
       )}
 
       {/* 3. HERO SECTION (TELA INICIAL) */}
-      <section id="inicio" className="bg-gradient-to-br from-podemos-dark via-slate-900 to-podemos-dark text-white relative overflow-hidden py-10 md:py-16 lg:py-20">
+      <section id="inicio" className="bg-gradient-to-br from-podemos-dark via-slate-900 to-podemos-dark text-white relative py-10 md:py-16 lg:py-20">
         
-        {/* Subtle decorative background - Rio Grande do Sul colors in high-performance gradients (no hardware-intensive blur filters) */}
-        <div className="absolute top-1/4 right-0 w-80 h-80 bg-[radial-gradient(circle_at_center,rgba(0,150,57,0.12)_0%,transparent_70%)] pointer-events-none"></div>
-        <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-[radial-gradient(circle_at_center,rgba(218,41,28,0.12)_0%,transparent_70%)] pointer-events-none"></div>
-        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-[radial-gradient(circle_at_center,rgba(255,205,0,0.06)_0%,transparent_70%)] pointer-events-none"></div>
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
             
@@ -398,14 +393,14 @@ export default function App() {
               <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
                 <a
                   href="#captura"
-                  className="px-7 py-4 bg-rs-yellow hover:bg-white text-podemos-dark font-display font-black text-sm uppercase tracking-wider rounded-xl shadow-lg hover:translate-y-[-2px] smooth-transition text-center"
+                  className="px-7 py-4 bg-rs-yellow md:hover:bg-white text-podemos-dark font-display font-black text-sm uppercase tracking-wider rounded-xl shadow-lg md:hover:translate-y-[-2px] transition-all duration-200 text-center"
                   id="btn-hero-lead"
                 >
                   Apoiar Pré-Campanha
                 </a>
                 <a
                   href="#projetos"
-                  className="px-7 py-4 border border-slate-600 hover:border-slate-300 text-white font-medium text-sm rounded-xl hover:bg-slate-800 text-center smooth-transition"
+                  className="px-7 py-4 border border-slate-600 hover:border-slate-300 text-white font-medium text-sm rounded-xl hover:bg-slate-800 text-center transition-colors duration-200"
                   id="btn-hero-projects"
                 >
                   Ver Projetos de Lei
@@ -418,10 +413,10 @@ export default function App() {
             <div className="lg:col-span-5 relative mt-8 lg:mt-0 flex justify-center">
               
               {/* Solid Frame with Rio Grande do Sul design colors around portrait */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-rs-green via-rs-red to-rs-yellow opacity-20 rounded-2xl rotate-3 scale-102 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-rs-green/35 via-rs-red/35 to-rs-yellow/35 rounded-2xl scale-[1.01] pointer-events-none"></div>
               
               {/* Outer frame containing candidate photo */}
-              <div className="relative bg-gradient-to-b from-slate-800 to-podemos-dark/60 p-2.5 rounded-2xl border border-slate-700 shadow-2xl max-w-sm w-full mx-auto animate-fade-in z-10 overflow-hidden">
+              <div className="relative bg-gradient-to-b from-slate-800 to-podemos-dark/60 p-2.5 rounded-2xl border border-slate-700 shadow-2xl max-w-sm w-full mx-auto z-10 overflow-hidden">
                 
                 {/* Floating Big badge of "PODEMOS 20" */}
                 <div className="absolute top-4 left-4 bg-podemos-dark/98 text-white p-2 rounded-xl flex items-center gap-2 border border-slate-700 shadow-md z-20">
@@ -437,7 +432,7 @@ export default function App() {
                   <img 
                     src={candidateImage} 
                     alt="Capitão Macedo, pré-candidato a deputado estadual"
-                    className="w-full h-full object-cover smooth-transition hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-300 md:hover:scale-105"
                     referrerPolicy="no-referrer"
                     id="img-hero-candidate"
                   />
@@ -1338,7 +1333,7 @@ export default function App() {
           href="https://wa.me/555193687702?text=Olá%20sra.%20Josi,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-4 py-3 rounded-full shadow-2xl hover:scale-105 smooth-transition border border-emerald-500/25 ring-4 ring-emerald-500/15 group"
+          className="flex items-center gap-2 bg-emerald-600 md:hover:bg-emerald-500 text-white font-extrabold px-4 py-3 rounded-full shadow-2xl md:hover:scale-105 transition-all duration-200 border border-emerald-500/25 ring-4 ring-emerald-500/15 group"
           title="Falar com a Sra. Josi via WhatsApp"
           id="floating-whatsapp-josi"
         >
@@ -1355,7 +1350,7 @@ export default function App() {
           href="https://queroapoiar.com.br/capitaomacedoprofessor?fbclid=IwdGRzaASMf5ljbGNrBIx_hWV4dG4DYWVtAjExAHNydGMGYXBwX2lkDDM1MDY4NTUzMTcyOAABHl4MY0buUyGOpL2aN-k7ISvslZlWA_0AIDR8bGofEkJD-rKrLoqt_PjdTsLS_aem_5EjP02OShasPiH3tRzfWtA&sfnsn=wiwspwa"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-[#FFC72C] hover:bg-slate-900 hover:text-white text-slate-950 font-black px-4 py-3 rounded-full shadow-2xl hover:scale-105 smooth-transition border border-amber-400 group ring-4 ring-amber-400/15"
+          className="flex items-center gap-2 bg-[#FFC72C] md:hover:bg-slate-900 md:hover:text-white text-slate-950 font-black px-4 py-3 rounded-full shadow-2xl md:hover:scale-105 transition-all duration-200 border border-amber-400 group ring-4 ring-amber-400/15"
           title="Apoie a Vaquinha"
           id="floating-vaquinha-online"
         >
