@@ -3,7 +3,8 @@ import {
   Users, Search, Filter, MapPin, 
   Lock, Shield, Calendar, RefreshCw, X, MessageSquare, Tag, FileText,
   User, Mail, Phone, Sprout, ShieldAlert, GraduationCap, ChevronRight, ChevronDown, Check,
-  ArrowRight, HeartPulse, Menu, Quote, Globe, Vote, CheckCircle, DollarSign, Heart, MessageCircle
+  ArrowRight, HeartPulse, Menu, Quote, Globe, Vote, CheckCircle, DollarSign, Heart, MessageCircle,
+  Instagram, Facebook
 } from "lucide-react";
 import { Lead, LegislativeProject, ParliamentaryFront } from "./types";
 import { CANDIDATE_INFO, LEGISLATIVE_PROJECTS, PARLIAMENTARY_FRONTS, MUNICIPALITIES_SERVED, CAMPAIGN_FLAGS } from "./data";
@@ -66,6 +67,9 @@ export default function App() {
 
   // CRM access state
   const [isCrmOpen, setIsCrmOpen] = useState(false);
+
+  // Suggestion Improvements State: Interactive Dairy (Milk) Chain Simulator
+  const [milkSimulatorMode, setMilkSimulatorMode] = useState<"gaucho" | "estrangeiro">("gaucho");
 
   // Phone input formatting Brazilian standard (XX) XXXXX-XXXX
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -159,7 +163,7 @@ export default function App() {
           Vaquinha Coletiva
         </span>
         <span className="text-slate-950 font-sans tracking-tight">
-          Apoie nossa caminhada participando de nossa Vaquinha Online! Sra. Josi (Coordenação): <a href="https://wa.me/555193687702?text=Olá%20sra.%20Josi,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-800 font-extrabold">+55 51 9368-7702</a>
+          Apoie nossa caminhada participando de nossa Vaquinha Online! Coordenação de Campanha: <a href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-800 font-extrabold">+55 51 9368-7702</a>
         </span>
         <a 
           href="https://queroapoiar.com.br/capitaomacedoprofessor?fbclid=IwdGRzaASMf5ljbGNrBIx_hWV4dG4DYWVtAjExAHNydGMGYXBwX2lkDDM1MDY4NTUzMTcyOAABHl4MY0buUyGOpL2aN-k7ISvslZlWA_0AIDR8bGofEkJD-rKrLoqt_PjdTsLS_aem_5EjP02OShasPiH3tRzfWtA&sfnsn=wiwspwa"
@@ -199,8 +203,30 @@ export default function App() {
             <a href="#captura" className="text-slate-305 hover:text-rs-yellow smooth-transition">Apoiar Caminhada</a>
           </nav>
 
-          {/* Action buttons (CRM & Apoio) */}
+          {/* Action buttons (CRM, Socials & Apoio) */}
           <div className="hidden md:flex items-center gap-3">
+            <div className="flex items-center gap-1.5 border-r border-slate-800 pr-3 mr-1">
+              <a 
+                href="https://www.instagram.com/stories/capitao_macedo/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="p-1.5 text-slate-400 hover:text-[#E1306C] transition-colors"
+                title="Instagram"
+                id="header-social-instagram"
+              >
+                <Instagram className="w-4.5 h-4.5" />
+              </a>
+              <a 
+                href="https://www.facebook.com/deputadocapitaomacedo/?locale=pt_BR" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="p-1.5 text-slate-400 hover:text-[#1877F2] transition-colors"
+                title="Facebook"
+                id="header-social-facebook"
+              >
+                <Facebook className="w-4.5 h-4.5" />
+              </a>
+            </div>
             <button
               onClick={() => setIsCrmOpen(true)}
               className="px-3.5 py-1.5 border border-slate-700 hover:border-rs-yellow text-slate-300 hover:text-rs-yellow rounded-lg text-xs font-semibold flex items-center gap-1.5 smooth-transition"
@@ -302,35 +328,66 @@ export default function App() {
                   <DollarSign className="w-4 h-4 text-rs-yellow group-hover:text-slate-900 smooth-transition" />
                 </a>
                 <a 
-                  href="https://wa.me/555193687702?text=Olá%20sra.%20Josi,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!"
+                  href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileMenuOpen(false)}
                   className="py-2 px-3 bg-emerald-950/40 border border-emerald-500/30 rounded-lg text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 group smooth-transition font-bold flex items-center justify-between"
                 >
-                  <span>Falar com Josi (Coordenação)</span>
+                  <span>Coordenação de Campanha</span>
                   <MessageCircle className="w-4 h-4 text-emerald-400 group-hover:text-slate-950 smooth-transition animate-bounce" />
                 </a>
               </nav>
             </div>
 
-            <div className="space-y-4">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setIsCrmOpen(true);
-                }}
-                className="w-full py-3 border border-slate-700 text-slate-300 hover:text-rs-yellow hover:border-rs-yellow rounded-xl text-sm font-semibold flex items-center justify-center gap-2 smooth-transition"
-                id="btn-drawer-crm"
-              >
-                <Shield className="w-4 h-4 text-rs-yellow" />
-                Painel CRM da Campanha
-              </button>
+             <div className="space-y-4">
+               {/* Redes Sociais - Mobile Drawer Section */}
+               <div className="border-t border-slate-800/80 pt-3.5">
+                 <p className="text-center text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-2">
+                   Nossas Redes Sociais
+                 </p>
+                 <div className="grid grid-cols-2 gap-2">
+                   <a 
+                     href="https://www.instagram.com/stories/capitao_macedo/" 
+                     target="_blank" 
+                     rel="noopener noreferrer"
+                     onClick={() => setMobileMenuOpen(false)}
+                     className="flex items-center justify-center gap-1.5 py-2 px-2.5 bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-pink-500/20 hover:border-pink-500/40 text-white font-semibold text-xs rounded-xl transition-all"
+                     id="drawer-social-instagram"
+                   >
+                     <Instagram className="w-4 h-4 text-pink-400" />
+                     <span>Instagram</span>
+                   </a>
+                   <a 
+                     href="https://www.facebook.com/deputadocapitaomacedo/?locale=pt_BR" 
+                     target="_blank" 
+                     rel="noopener noreferrer"
+                     onClick={() => setMobileMenuOpen(false)}
+                     className="flex items-center justify-center gap-1.5 py-2 px-2.5 bg-blue-950/20 border border-blue-500/20 hover:border-blue-500/40 text-white font-semibold text-xs rounded-xl transition-all"
+                     id="drawer-social-facebook"
+                   >
+                     <Facebook className="w-4 h-4 text-blue-400" />
+                     <span>Facebook</span>
+                   </a>
+                 </div>
+               </div>
 
-              <div className="text-center text-[10px] text-slate-500">
-                PODEMOS RS - Capitão Macedo 2026
-              </div>
-            </div>
+               <button
+                 onClick={() => {
+                   setMobileMenuOpen(false);
+                   setIsCrmOpen(true);
+                 }}
+                 className="w-full py-3 border border-slate-700 text-slate-300 hover:text-rs-yellow hover:border-rs-yellow rounded-xl text-sm font-semibold flex items-center justify-center gap-2 smooth-transition"
+                 id="btn-drawer-crm"
+               >
+                 <Shield className="w-4 h-4 text-rs-yellow" />
+                 Painel CRM da Campanha
+               </button>
+
+               <div className="text-center text-[10px] text-slate-500">
+                 PODEMOS RS - Capitão Macedo 2026
+               </div>
+             </div>
           </div>
         </div>
       )}
@@ -345,11 +402,17 @@ export default function App() {
             <div className="lg:col-span-7 space-y-6 md:space-y-8 text-center lg:text-left">
               
               {/* Campaign tag */}
-              <div className="inline-flex items-center gap-1.5 bg-slate-800/85 border border-slate-700 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider text-slate-200 uppercase shadow-inner mx-auto lg:mx-0">
-                <span className="w-2 h-2 rounded-full bg-rs-red block"></span>
-                <span>Pré-Candidato a Deputado Estadual</span>
-                <span className="w-1 h-3 bg-rs-yellow block rounded-full"></span>
-                <span className="text-rs-yellow font-black">PODEMOS RS</span>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-2.5">
+                <div className="inline-flex items-center gap-1.5 bg-slate-800/85 border border-slate-700 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider text-slate-200 uppercase shadow-inner">
+                  <span className="w-2 h-2 rounded-full bg-rs-red block"></span>
+                  <span>Pré-Candidato a Deputado Estadual</span>
+                  <span className="w-1 h-3 bg-rs-yellow block rounded-full"></span>
+                  <span className="text-rs-yellow font-black">PODEMOS RS</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 bg-blue-950/70 border border-blue-800/80 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider text-blue-200 uppercase shadow-inner">
+                  <GraduationCap className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                  <span>O Capitão Professor</span>
+                </div>
               </div>
 
               {/* Display name with high visual weight */}
@@ -429,11 +492,17 @@ export default function App() {
                     </div>
                   </div>
 
+                  {/* Floating Professor emphasis badge */}
+                  <div className="absolute top-4 right-4 bg-[#004D8C]/95 text-white py-1.5 px-3 rounded-lg flex items-center gap-1.5 border border-blue-500/35 shadow-md z-20">
+                    <GraduationCap className="w-4 h-4 text-blue-300 shrink-0" />
+                    <span className="text-[10px] uppercase font-black tracking-wider text-slate-100">O Professor</span>
+                  </div>
+
                   {/* Candidate main photograph */}
-                  <div className="rounded-xl overflow-hidden aspect-square bg-slate-900 border border-slate-750 relative select-none">
+                  <div className="rounded-xl overflow-hidden aspect-square bg-slate-900 border border-slate-755 relative select-none">
                     <img 
                       src={candidateImage} 
-                      alt="Capitão Macedo, pré-candidato a deputado estadual"
+                      alt="Capitão Macedo, Professor Universitário, Militar e Agricultor"
                       className="w-full h-full object-cover transition-transform duration-300 md:hover:scale-105"
                       referrerPolicy="no-referrer"
                       id="img-hero-candidate"
@@ -448,16 +517,17 @@ export default function App() {
 
                   {/* Legend container beneath photograph */}
                   <div className="pt-3.5 pb-2 px-3 text-center sm:text-left">
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                       <div>
-                        <h3 className="font-display font-extrabold text-white text-lg leading-tight">
-                          CAPITÃO MACEDO
+                        <h3 className="font-display font-extrabold text-[#FFE57F] text-lg leading-tight flex items-center justify-center sm:justify-start gap-1">
+                          <span className="text-white">CAPITÃO MACEDO</span>
                         </h3>
-                        <p className="text-xs text-slate-350">
-                          Professor Universitário & Capitão da Brigada
+                        <p className="text-xs text-slate-200 font-semibold flex items-center justify-center sm:justify-start gap-1.5 mt-0.5">
+                          <GraduationCap className="w-3.5 h-3.5 text-blue-300 block shrink-0" />
+                          <span>Professor Universitário & Brg. Militar</span>
                         </p>
                       </div>
-                      <div className="bg-rs-yellow/10 text-rs-yellow border border-rs-yellow/20 px-2.5 py-1 rounded text-xs font-black self-center sm:self-auto uppercase tracking-wider">
+                      <div className="bg-rs-yellow/10 text-rs-yellow border border-rs-yellow/20 px-2.5 py-1.5 rounded text-xs font-black self-center sm:self-auto uppercase tracking-wider">
                         PODEMOS 20
                       </div>
                     </div>
@@ -572,11 +642,11 @@ export default function App() {
                     Coordenação da Campanha
                   </h4>
                   <p className="text-xs text-slate-500 font-medium tracking-wide mt-0.5">
-                    Fale com a Sra. Josi (Responsável)
+                    Atendimento Oficial ao Apoiador
                   </p>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed font-normal">
-                  Quer solicitar adesivos, materiais de campanha, tirar dúvidas sobre as propostas e frentes parlamentares de Capitão Macedo, ou convidar o pré-candidato para visitar o seu município ou bacia leiteira? Fale diretamente com a sra. Josi.
+                  Quer solicitar adesivos, materiais de campanha, tirar dúvidas sobre as propostas e frentes parlamentares de Capitão Macedo, ou convidar o pré-candidato para visitar o seu município ou bacia leiteira? Fale diretamente com a Coordenação de Campanha.
                 </p>
               </div>
 
@@ -584,12 +654,12 @@ export default function App() {
                 <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 flex items-center gap-3">
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0"></div>
                   <div className="text-[11px] text-emerald-800 leading-snug font-normal">
-                    <strong className="block font-bold">Sra. Josi — Mobilização Oficial</strong>
+                    <strong className="block font-bold">Coordenação de Campanha</strong>
                     WhatsApp direto de atendimento ao apoiador gaúcho: +55 51 9368-7702
                   </div>
                 </div>
                 <a
-                  href="https://wa.me/555193687702?text=Olá%20sra.%20Josi,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!"
+                  href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-display font-black text-xs uppercase tracking-wider rounded-xl text-center shadow-sm hover:shadow smooth-transition flex justify-center items-center gap-2"
@@ -653,12 +723,75 @@ export default function App() {
                   Fidelidade intocável a princípios conservadores, defesa inequívoca da segurança e da ordem pública, oposição ferrenha ao assistencialismo e compromisso com o desenvolvimento das cooperativas e de quem produz no interior gaúcho.
                 </p>
               </div>
+
+              {/* Redes Sociais - Canal Direto */}
+              <div className="bg-slate-50 border border-slate-100 p-6 rounded-2xl shadow-sm space-y-4">
+                <div>
+                  <h4 className="font-display font-extrabold text-[#0A1C33] text-sm">
+                    Acompanhe o Capitão Macedo
+                  </h4>
+                  <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                    Assista aos pronunciamentos, agendas regionais de pré-campanha e posicionamentos diários nas redes oficiais:
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                   <a 
+                     href="https://www.instagram.com/stories/capitao_macedo/" 
+                     target="_blank" 
+                     rel="noopener noreferrer"
+                     className="inline-flex items-center justify-center gap-2 py-2.5 px-3 bg-gradient-to-r from-purple-600 via-pink-600 to-red-500 text-white font-extrabold text-xs rounded-xl shadow-xs hover:opacity-90 active:scale-[0.98] transition-all text-center"
+                     id="bio-social-instagram"
+                   >
+                     <Instagram className="w-4 h-4 shrink-0" />
+                     <span>Siga no Instagram</span>
+                   </a>
+                   <a 
+                     href="https://www.facebook.com/deputadocapitaomacedo/?locale=pt_BR" 
+                     target="_blank" 
+                     rel="noopener noreferrer"
+                     className="inline-flex items-center justify-center gap-2 py-2.5 px-3 bg-[#1877F2] hover:bg-[#166FE5] text-white font-extrabold text-xs rounded-xl shadow-xs active:scale-[0.98] transition-all text-center"
+                     id="bio-social-facebook"
+                   >
+                     <Facebook className="w-4 h-4 shrink-0" />
+                     <span>Página no Facebook</span>
+                   </a>
+                </div>
+              </div>
+
+              {/* ID-RS-CULTURAL: RS pride and local traditionalism protection */}
+              <div id="rs-cultural-pride-card" className="bg-gradient-to-br from-white to-amber-50/5 border-l-4 border-rs-green border-y border-r border-slate-100 p-6 rounded-r-2xl rounded-l-none shadow-sm space-y-3.5 smooth-transition hover:shadow-md">
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1 bg-[#009639]/10 text-[#009639] text-[9.5px] uppercase px-2 py-0.5 rounded-full font-black tracking-widest">
+                    Cultura & Tradição
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-bold flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 bg-rs-red rounded-full animate-pulse"></span> Símbolos do RS
+                  </span>
+                </div>
+                
+                <h4 className="font-display font-extrabold text-podemos-dark text-sm flex items-center gap-2">
+                  <span className="text-lg">🧉</span> Valorização do Tradicionalismo Gaúcho
+                </h4>
+                
+                <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                  Respeito e fomento permanente aos <strong>CTGs (Centros de Tradições Gaúchas)</strong>, piquetes rurais e ao <strong>MTG</strong> como centros de formação moral de nossa juventude. Defesa intransigente de nosso hino, bandeira, história missioneira e do estilo de vida tradicional do campo.
+                </p>
+                
+                <div className="bg-amber-500/5 hover:bg-amber-500/10 rounded-xl p-3 border border-amber-500/10 flex items-center gap-2.5">
+                  <Vote className="w-4 h-4 text-amber-500 shrink-0" />
+                  <p className="text-[10.5px] text-amber-900 leading-snug font-medium italic">
+                    "O cultivo às nossas tradições gaúchas é o melhor escudo moral para aproximar as famílias e guiar novas gerações." <span className="font-bold shrink-0 block not-italic mt-0.5 text-slate-500 text-[9.5px]">— Capitão Macedo</span>
+                  </p>
+                </div>
+              </div>
+
             </div>
 
             {/* Core Interactive Pillars list */}
             <div className="lg:col-span-7 space-y-4">
               
-              <div className="bg-slate-50 border border-slate-1 corners hover:border-slate-300 p-5 rounded-2xl shadow-xs flex flex-col sm:flex-row gap-4 smooth-transition hover:bg-white">
+              <div className="bg-slate-50 border border-slate-100 hover:border-slate-350 p-5 rounded-2xl shadow-xs flex flex-col sm:flex-row gap-4 smooth-transition hover:bg-white">
                 <div className="w-12 h-12 bg-emerald-100 text-slate-800 rounded-xl flex items-center justify-center shrink-0">
                   <Sprout className="w-6 h-6 text-[#009639]" />
                 </div>
@@ -672,8 +805,8 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="bg-slate-50 border border-slate-1 corners hover:border-slate-300 p-5 rounded-2xl shadow-xs flex flex-col sm:flex-row gap-4 smooth-transition hover:bg-white">
-                <div className="w-12 h-12 bg-red-100 text-slate-800 rounded-xl flex items-center justify-center shrink-0">
+              <div className="bg-slate-50 border border-slate-100 hover:border-slate-350 p-5 rounded-2xl shadow-xs flex flex-col sm:flex-row gap-4 smooth-transition hover:bg-white">
+                <div className="w-12 h-12 bg-red-105 text-slate-800 rounded-xl flex items-center justify-center shrink-0">
                   <ShieldAlert className="w-6 h-6 text-[#DA291C]" />
                 </div>
                 <div>
@@ -686,16 +819,26 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="bg-slate-50 border border-slate-1 corners hover:border-slate-300 p-5 rounded-2xl shadow-xs flex flex-col sm:flex-row gap-4 smooth-transition hover:bg-white">
-                <div className="w-12 h-12 bg-blue-100 text-slate-800 rounded-xl flex items-center justify-center shrink-0">
-                  <GraduationCap className="w-6 h-6 text-[#004D8C]" />
+              {/* EDUCATION & PROFESSOR CAREER EMPHASIS CARD */}
+              <div className="bg-gradient-to-br from-[#004D8C]/5 to-white border border-[#004D8C]/20 hover:border-[#004D8C]/40 p-6 rounded-2xl shadow-sm flex flex-col sm:flex-row gap-5 smooth-transition hover:shadow-md relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-16 h-16 bg-[#004D8C]/5 rounded-bl-full group-hover:scale-110 smooth-transition"></div>
+                <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-blue-200 text-blue-800 rounded-xl flex items-center justify-center shrink-0 shadow-xs">
+                  <GraduationCap className="w-7 h-7 text-[#004D8C]" />
                 </div>
-                <div>
-                  <h4 className="font-display font-extrabold text-slate-850 text-base">
-                    Educador e Profissional Qualificado
-                  </h4>
-                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                    Formado em Direito e em Contabilidade, alia formação científica à experiência prática. Atuou como professor de nível superior, defendendo que a verdadeira autoridade se constrói com sabedoria, preparo, seriedade e dedicação.
+                <div className="space-y-1.5 relative z-10 font-normal">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h4 className="font-display font-black text-slate-900 text-lg">
+                      Magistério e Alta Qualificação Acadêmica
+                    </h4>
+                    <span className="bg-[#004D8C] text-white text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-extrabold">
+                      Mais de 10 anos de Docência
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-700 leading-relaxed">
+                    Formado em duas faculdades cruciais — <strong>Direito</strong> e <strong>Contabilidade</strong> —, o Professor Aparecido Macedo alia profundo conhecimento técnico e fiscal à experiência prática de vida para legislar com responsabilidade e coerência financeira.
+                  </p>
+                  <p className="text-xs text-slate-600 leading-relaxed font-semibold bg-[#004D8C]/5 border-l-2 border-[#004D8C] p-2.5 rounded-r bg-opacity-40">
+                    Como professor universitário de nível superior, dedicou mais de uma década instruindo novas gerações. Defende firmemente que o parlamento precisa de cabeças técnicas preparadas, não de meros discursos vazios. Foca no fomento de <strong>Escolas Técnicas Profissionalizantes</strong> de nível secundário e superior para fixar nossa juventude no interior de forma qualificada.
                   </p>
                 </div>
               </div>
@@ -774,6 +917,157 @@ export default function App() {
               </a>
             </div>
 
+          </div>
+
+          {/* INTERACTIVE MILK DEFENDER RADAR (SUGGESTION OF IMPROVEMENT) */}
+          <div className="mt-10 bg-gradient-to-br from-[#009639]/5 via-amber-500/5 to-white rounded-2xl border border-rs-green/20 p-6 md:p-8 space-y-6 shadow-sm relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-rs-green/5 rounded-full blur-3xl"></div>
+            
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-4 border-b border-slate-100">
+              <div className="space-y-1.5 max-w-2xl">
+                <span className="inline-flex items-center gap-1.5 bg-rs-green text-white text-[9.5px] uppercase px-2.5 py-0.5 rounded font-black tracking-widest">
+                  Defesa Agrícola Ativa
+                </span>
+                <h4 className="font-display font-black text-podemos-dark text-xl sm:text-2xl">
+                  Painel de Defesa: O Futuro da Bacia Leiteira do RS
+                </h4>
+                <p className="text-xs text-slate-500 leading-relaxed font-normal">
+                  Como eleitor gaúcho, explore interativamente as duas realidades de mercado do nosso estado e veja o impacto real dos Projetos de Lei do Capitão Macedo na agricultura familiar.
+                </p>
+              </div>
+
+              {/* Selector Tabs */}
+              <div className="flex bg-slate-100 p-1 rounded-xl self-start lg:self-center shrink-0 border border-slate-205">
+                <button
+                  onClick={() => setMilkSimulatorMode("gaucho")}
+                  className={`px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 ${
+                    milkSimulatorMode === "gaucho"
+                      ? "bg-[#009639] text-white shadow-sm"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                  id="btn-sim-gaucho"
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  Modelo Capitão Macedo
+                </button>
+                <button
+                  onClick={() => setMilkSimulatorMode("estrangeiro")}
+                  className={`px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 ${
+                    milkSimulatorMode === "estrangeiro"
+                      ? "bg-[#DA291C] text-white shadow-sm"
+                      : "text-slate-600 hover:text-slate-[#DA291C]"
+                  }`}
+                  id="btn-sim-unregulated"
+                >
+                  <ShieldAlert className="w-4 h-4" />
+                  Cenário Sem Regulação
+                </button>
+              </div>
+            </div>
+
+            {/* Simulated Content cards Grid */}
+            {milkSimulatorMode === "gaucho" ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 animate-fade-in" id="panel-sim-active-gaucho">
+                
+                <div className="bg-white p-5 rounded-xl border border-emerald-100 shadow-xs space-y-3 relative hover:border-emerald-300 transition-all">
+                  <div className="w-9 h-9 bg-emerald-50 text-[#009639] rounded-lg flex items-center justify-center">
+                    <Sprout className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase tracking-wider text-[#009639] font-black">LEI DE ORIGEM</span>
+                    <h5 className="font-display font-extrabold text-slate-850 text-sm mt-0.5">Rótulo Exclusivo (PL 287/2020)</h5>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                    Obrigatoriedade de selo claro apontando o leite reconstituído importado pelas indústrias. O consumidor compra sabendo que incentiva o produtor gaúcho de perto.
+                  </p>
+                </div>
+
+                <div className="bg-white p-5 rounded-xl border border-emerald-100 shadow-xs space-y-3 relative hover:border-emerald-300 transition-all">
+                  <div className="w-9 h-9 bg-emerald-50 text-[#009639] rounded-lg flex items-center justify-center">
+                    <RefreshCw className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase tracking-wider text-[#009639] font-black">SISTEMAS DE IRRIGAÇÃO</span>
+                    <h5 className="font-display font-extrabold text-slate-850 text-sm mt-0.5">Defesa Contra Secas (PL 279/2020)</h5>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                    Incentivos públicos e destinação do Fundoleite direto para equipar poços artesianos e irrigar pastagens. Fartura garantida para o gado mesmo em estiagens.
+                  </p>
+                </div>
+
+                <div className="bg-white p-5 rounded-xl border border-emerald-100 shadow-xs space-y-3 relative hover:border-emerald-300 transition-all">
+                  <div className="w-9 h-9 bg-emerald-50 text-[#009639] rounded-lg flex items-center justify-center">
+                    <Users className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase tracking-wider text-[#009639] font-black">DIGNIDADE DAS FAMÍLIAS</span>
+                    <h5 className="font-display font-extrabold text-slate-850 text-sm mt-0.5">Combate ao Êxodo Rural</h5>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                    Proteção de mais de 62.000 propriedades familiares do RS, segurando renda no campo, estimulando as cooperativas agrícolas locais e girando riqueza no interior.
+                  </p>
+                </div>
+
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 animate-fade-in" id="panel-sim-active-estrangeiro">
+                
+                <div className="bg-white p-5 rounded-xl border border-red-105 shadow-xs space-y-3 relative hover:border-red-200 transition-all">
+                  <div className="w-9 h-9 bg-red-50 text-[#DA291C] rounded-lg flex items-center justify-center">
+                    <X className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase tracking-wider text-red-500 font-black">CONCORRÊNCIA DESLEAL</span>
+                    <h5 className="font-display font-extrabold text-slate-850 text-sm mt-0.5">Leite Sem Selo e Sem Rastreio</h5>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                    Ingresso desordenado de excedentes subsidiados do Uruguai/Argentina. Grandes laticínios usam leite em pó reconstruído sem que o consumidor gaúcho saiba.
+                  </p>
+                </div>
+
+                <div className="bg-white p-5 rounded-xl border border-red-105 shadow-xs space-y-3 relative hover:border-red-200 transition-all">
+                  <div className="w-9 h-9 bg-red-50 text-[#DA291C] rounded-lg flex items-center justify-center">
+                    <ShieldAlert className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase tracking-wider text-red-500 font-black">DEPENDÊNCIA DO CLIMA</span>
+                    <h5 className="font-display font-extrabold text-slate-850 text-sm mt-0.5">Estiagens Sem Socorro Direto</h5>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                    Secas severas causam estresse térmico no gado, diminuem a produção de alimento e destroem o fluxo financeiro do produtor por falta de crédito para poços e aspersores.
+                  </p>
+                </div>
+
+                <div className="bg-white p-5 rounded-xl border border-red-105 shadow-xs space-y-3 relative hover:border-red-200 transition-all">
+                  <div className="w-9 h-9 bg-red-50 text-[#DA291C] rounded-lg flex items-center justify-center">
+                    <Users className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase tracking-wider text-red-500 font-black">FALÊNCIA DO PEQUENO</span>
+                    <h5 className="font-display font-extrabold text-slate-850 text-sm mt-0.5">Desativação das Bacias Familiares</h5>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                    Inviabilidade econômica derruba as pequenas propriedades. Jovens migram em massa do interior para as grandes metrópoles gaúchas em busca de emprego informal.
+                  </p>
+                </div>
+
+              </div>
+            )}
+
+            <div className="bg-slate-50 border border-slate-150 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3.5 text-center sm:text-left">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🙌</span>
+                <p className="text-[11.5px] text-slate-600 leading-normal font-normal">
+                  Quer apoiar essa luta nacional e regional em defesa da agricultura familiar gaucha? Junte-se a nós participando do apoiaço online e fazendo valer as marcas do nosso interior gaúcho.
+                </p>
+              </div>
+              <a 
+                href="#captura"
+                className="px-5 py-2.5 bg-slate-900 hover:bg-[#009639] text-white font-extrabold text-xs tracking-wide uppercase rounded-xl transition-all shadow-sm shrink-0"
+              >
+                Assinar Abaixo-Assinado de Apoio
+              </a>
+            </div>
           </div>
 
           {/* Collapsible Parliamentary Fronts Area */}
@@ -1025,6 +1319,34 @@ export default function App() {
             )}
           </div>
 
+          {/* CHIMARRAO LOCAL INVITATION: Suggested Gaucho Elector Engagement improvement */}
+          <div className="mt-8 bg-gradient-to-br from-amber-500/5 via-orange-500/5 to-amber-50/10 p-5 rounded-2xl border border-amber-200/50 flex flex-col md:flex-row items-center justify-between gap-5 shadow-xs">
+            <div className="flex items-center gap-4 text-center md:text-left flex-col md:flex-row">
+              <div className="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center text-3xl shadow-xs shrink-0 select-none">
+                🧉
+              </div>
+              <div className="space-y-1">
+                <h4 className="font-display font-extrabold text-[#78350F] text-sm md:text-base flex items-center justify-center md:justify-start gap-1.5">
+                  Convidar o Capitão para sua Região / Roda de Chimarrão
+                </h4>
+                <p className="text-[11.5px] text-slate-600 leading-normal max-w-2xl font-normal">
+                  Nossa caravana passa por todo o Rio Grande do Sul conversando olho-no-olho com o produtor e cidadão. Quer agendar uma visita do Capitão Macedo na cooperativa, sindicato rural, CTG, igreja ou feira municipal de sua cidade? Envie uma convocatória oficial para nosso atendimento.
+                </p>
+              </div>
+            </div>
+            
+            <a
+              href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20convidar%20o%20Capitão%20Macedo%20para%2520uma%2520visita%2520institucional/roda%2520de%2520chimarrão%2520na%2520minha%2520cidade!"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-3 bg-amber-600 hover:bg-amber-700 text-white font-display font-black text-xs uppercase tracking-wider rounded-xl shadow-xs hover:shadow-md smooth-transition flex items-center justify-center gap-2 shrink-0 w-full md:w-auto"
+              id="btn-invitation-chimarrao"
+            >
+              <MessageSquare className="w-4 h-4 shrink-0" />
+              Agendar Visita
+            </a>
+          </div>
+
         </div>
       </section>
 
@@ -1085,8 +1407,8 @@ export default function App() {
               <div className="bg-slate-50 border border-slate-200/80 p-5 rounded-xl text-center space-y-3">
                 <p className="text-xs text-slate-600 font-semibold flex flex-wrap items-center justify-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
-                  <span>Dúvidas? Coordenação (Sra. Josi):</span> 
-                  <a href="https://wa.me/555193687702?text=Olá%20sra.%20Josi,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!" target="_blank" rel="noopener noreferrer" className="text-emerald-750 hover:text-emerald-600 underline font-bold inline-flex items-center gap-1">
+                  <span>Dúvidas? Coordenação de Campanha:</span> 
+                  <a href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!" target="_blank" rel="noopener noreferrer" className="text-emerald-750 hover:text-emerald-600 underline font-bold inline-flex items-center gap-1">
                     <span>+55 51 9368-7702</span>
                   </a>
                 </p>
@@ -1291,24 +1613,51 @@ export default function App() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4 flex-wrap justify-center">
-              <a href="#apresentacao" className="text-slate-400 hover:text-white smooth-transition">Biografia</a>
-              <span className="text-slate-700">|</span>
-              <a href="#frentes" className="text-slate-400 hover:text-white smooth-transition">Frentes</a>
-              <span className="text-slate-700">|</span>
-              <a href="#projetos" className="text-slate-400 hover:text-white smooth-transition">Leis</a>
-              <span className="text-slate-700">|</span>
-              <a href="#municipios" className="text-slate-400 hover:text-white smooth-transition">Cidades Atendidas</a>
-            </div>
+             <div className="flex flex-col items-center gap-2">
+               <div className="flex items-center gap-4 flex-wrap justify-center">
+                 <a href="#apresentacao" className="text-slate-400 hover:text-white smooth-transition">Biografia</a>
+                 <span className="text-slate-700">|</span>
+                 <a href="#frentes" className="text-slate-400 hover:text-white smooth-transition">Frentes</a>
+                 <span className="text-slate-700">|</span>
+                 <a href="#projetos" className="text-slate-400 hover:text-white smooth-transition">Leis</a>
+                 <span className="text-slate-700">|</span>
+                 <a href="#municipios" className="text-slate-400 hover:text-white smooth-transition">Cidades Atendidas</a>
+               </div>
+               
+               {/* Redes Sociais Footer Row */}
+               <div className="flex items-center gap-2.5 mt-2">
+                 <span className="text-[10px] text-slate-500 uppercase tracking-widest font-black">Acompanhe:</span>
+                 <a 
+                   href="https://www.instagram.com/stories/capitao_macedo/" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-[#E1306C] text-slate-400 hover:text-white flex items-center justify-center transition-all shadow-sm"
+                   title="Instagram do Capitão Macedo"
+                   id="footer-social-instagram"
+                 >
+                   <Instagram className="w-4 h-4" />
+                 </a>
+                 <a 
+                   href="https://www.facebook.com/deputadocapitaomacedo/?locale=pt_BR" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-[#1877F2] text-slate-400 hover:text-white flex items-center justify-center transition-all shadow-sm"
+                   title="Facebook do Capitão Macedo"
+                   id="footer-social-facebook"
+                 >
+                   <Facebook className="w-4 h-4" />
+                 </a>
+               </div>
+             </div>
 
-            <button
-              onClick={() => setIsCrmOpen(true)}
-              className="px-4 py-2 bg-slate-800 hover:bg-slate-750 text-slate-100 hover:text-rs-yellow border border-slate-700 rounded-xl font-semibold flex items-center gap-2 smooth-transition shadow-inner"
-              id="btn-footer-crm-trigger"
-            >
-              <Shield className="w-4 h-4 text-rs-yellow" />
-              Acesso Equipe - CRM
-            </button>
+             <button
+               onClick={() => setIsCrmOpen(true)}
+               className="px-4 py-2 bg-slate-800 hover:bg-slate-750 text-slate-100 hover:text-rs-yellow border border-slate-700 rounded-xl font-semibold flex items-center gap-2 smooth-transition shadow-inner"
+               id="btn-footer-crm-trigger"
+             >
+               <Shield className="w-4 h-4 text-rs-yellow" />
+               Acesso Equipe - CRM
+             </button>
           </div>
 
           <div className="border-t border-slate-800 pt-6 text-center text-[10.5px] text-slate-500 space-y-1.5 leading-relaxed font-normal">
@@ -1333,18 +1682,18 @@ export default function App() {
         
         {/* Floating WhatsApp Card - Pulsing & Collapsible */}
         <a
-          href="https://wa.me/555193687702?text=Olá%20sra.%20Josi,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!"
+          href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 bg-emerald-600 md:hover:bg-emerald-500 text-white font-extrabold px-4 py-3 rounded-full shadow-2xl md:hover:scale-105 transition-all duration-200 border border-emerald-500/25 ring-4 ring-emerald-500/15 group"
-          title="Falar com a Sra. Josi via WhatsApp"
-          id="floating-whatsapp-josi"
+          title="Coordenação de Campanha via WhatsApp"
+          id="floating-whatsapp-coordenacao"
         >
           <span className="relative flex h-3 w-3 shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
           </span>
-          <span className="text-xs tracking-tight">Falar com Josi</span>
+          <span className="text-xs tracking-tight">Coordenação de Campanha</span>
           <MessageCircle className="w-4 bg-transparent text-white" />
         </a>
 
