@@ -11,8 +11,8 @@ import { CANDIDATE_INFO, LEGISLATIVE_PROJECTS, PARLIAMENTARY_FRONTS, MUNICIPALIT
 import CrmDashboard from "./components/CrmDashboard";
 import { leadsService } from "./services/leadsService";
 
-// Import candidate campaign portrait generated in previous step
-import candidateImage from "./assets/images/capitao_macedo_correto_1780458885720.png";
+// Import/define candidate campaign portrait from public directory for reliable static hosting (Vercel)
+const candidateImage = "/capitao_macedo_correto.png";
 
 // Inline Custom SVG for the "Podemos 20 RS" Logo (Matches user attachment)
 function PodemosRsLogo({ className = "w-10 h-10" }: { className?: string }) {
@@ -163,7 +163,7 @@ export default function App() {
           Vaquinha Coletiva
         </span>
         <span className="text-slate-950 font-sans tracking-tight">
-          Apoie nossa caminhada participando de nossa Vaquinha Online! Coordenação de Campanha: <a href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-800 font-extrabold">+55 51 9368-7702</a>
+          Apoie nossa caminhada participando de nossa Vaquinha Online! Coordenação de Campanha: <a href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-800 font-extrabold">+55 51 9368-7702</a>
         </span>
         <a 
           href="https://queroapoiar.com.br/capitaomacedoprofessor?fbclid=IwdGRzaASMf5ljbGNrBIx_hWV4dG4DYWVtAjExAHNydGMGYXBwX2lkDDM1MDY4NTUzMTcyOAABHl4MY0buUyGOpL2aN-k7ISvslZlWA_0AIDR8bGofEkJD-rKrLoqt_PjdTsLS_aem_5EjP02OShasPiH3tRzfWtA&sfnsn=wiwspwa"
@@ -328,7 +328,7 @@ export default function App() {
                   <DollarSign className="w-4 h-4 text-rs-yellow group-hover:text-slate-900 smooth-transition" />
                 </a>
                 <a 
-                  href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!"
+                  href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileMenuOpen(false)}
@@ -410,8 +410,8 @@ export default function App() {
                   <span className="text-rs-yellow font-black">PODEMOS RS</span>
                 </div>
                 <div className="inline-flex items-center gap-1.5 bg-blue-950/70 border border-blue-800/80 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider text-blue-200 uppercase shadow-inner">
-                  <GraduationCap className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                  <span>O Capitão Professor</span>
+                  <Shield className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                  <span>Capitão Macedo</span>
                 </div>
               </div>
 
@@ -433,7 +433,7 @@ export default function App() {
 
               {/* Descriptive introduction */}
               <p className="text-sm md:text-base text-slate-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-                {CANDIDATE_INFO.slogan} Uma trajetória que une a seriedade da <strong className="text-white">carreira militar</strong> (Capitão da Brigada Militar), a força da <strong className="text-white">educação acadêmica</strong> como Professor e o profundo respeito a quem trabalha no <strong className="text-white">agronegócio e interior</strong>.
+                {CANDIDATE_INFO.slogan} Uma trajetória que une a seriedade da <strong className="text-white">carreira militar</strong> (Capitão do Exército brasileiro), a força da <strong className="text-white">educação acadêmica</strong> como Professor e o profundo respeito a quem trabalha no <strong className="text-white">agronegócio e interior</strong>.
               </p>
 
               {/* Quick campaign badge highlights */}
@@ -492,17 +492,17 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Floating Professor emphasis badge */}
-                  <div className="absolute top-4 right-4 bg-[#004D8C]/95 text-white py-1.5 px-3 rounded-lg flex items-center gap-1.5 border border-blue-500/35 shadow-md z-20">
-                    <GraduationCap className="w-4 h-4 text-blue-300 shrink-0" />
-                    <span className="text-[10px] uppercase font-black tracking-wider text-slate-100">O Professor</span>
+                  {/* Floating Military emphasis badge */}
+                  <div className="absolute top-4 right-4 bg-emerald-900/95 text-white py-1.5 px-3 rounded-lg flex items-center gap-1.5 border border-emerald-500/35 shadow-md z-20">
+                    <Shield className="w-4 h-4 text-emerald-300 shrink-0" />
+                    <span className="text-[10px] uppercase font-black tracking-wider text-slate-100">Exército Brasileiro</span>
                   </div>
 
                   {/* Candidate main photograph */}
                   <div className="rounded-xl overflow-hidden aspect-square bg-slate-900 border border-slate-755 relative select-none">
                     <img 
                       src={candidateImage} 
-                      alt="Capitão Macedo, Professor Universitário, Militar e Agricultor"
+                      alt="Capitão Macedo - Capitão do Exército brasileiro e Professor"
                       className="w-full h-full object-cover transition-transform duration-300 md:hover:scale-105"
                       referrerPolicy="no-referrer"
                       id="img-hero-candidate"
@@ -523,8 +523,8 @@ export default function App() {
                           <span className="text-white">CAPITÃO MACEDO</span>
                         </h3>
                         <p className="text-xs text-slate-200 font-semibold flex items-center justify-center sm:justify-start gap-1.5 mt-0.5">
-                          <GraduationCap className="w-3.5 h-3.5 text-blue-300 block shrink-0" />
-                          <span>Professor Universitário & Brg. Militar</span>
+                          <Shield className="w-3.5 h-3.5 text-blue-300 block shrink-0" />
+                          <span>Capitão do Exército brasileiro</span>
                         </p>
                       </div>
                       <div className="bg-rs-yellow/10 text-rs-yellow border border-rs-yellow/20 px-2.5 py-1.5 rounded text-xs font-black self-center sm:self-auto uppercase tracking-wider">
@@ -659,7 +659,7 @@ export default function App() {
                   </div>
                 </div>
                 <a
-                  href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!"
+                  href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-display font-black text-xs uppercase tracking-wider rounded-xl text-center shadow-sm hover:shadow smooth-transition flex justify-center items-center gap-2"
@@ -701,7 +701,7 @@ export default function App() {
               <div className="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-100 shadow-sm relative">
                 <Quote className="w-10 h-10 text-[#FFE57F] absolute -top-4 -left-2 opacity-55" />
                 <p className="text-slate-700 italic text-sm leading-relaxed relative z-10">
-                  "Há trajetórias que se explicam pelos cargos que ocuparam. Outras, porém, se explicam pelos valores que as formaram. A de Aparecido Macedo pertence a esta segunda categoria. Sua história traz as marcas d’água do interior, do trabalho duro e de uma formação construída com muito esforço, disciplina e constância."
+                  "Há trajetórias que se explicam pelos cargos que ocuparam. Outras, porém, se explicam pelos valores que as formaram. A de Aparecido Macedo (Capitão Macedo) pertence a esta segunda categoria. Sua história traz as marcas d’água do interior, do trabalho duro e de uma formação construída com muito esforço, disciplina e constância."
                 </p>
                 <div className="mt-4 flex items-center gap-3">
                   <div className="w-10 h-10 bg-rs-red text-white font-bold rounded-full flex items-center justify-center font-display text-xs">
@@ -709,7 +709,7 @@ export default function App() {
                   </div>
                   <div>
                     <h5 className="font-display font-bold text-slate-850 text-xs">Aparecido Macedo</h5>
-                    <p className="text-[10px] text-slate-500">Conhecido como Capitão Macedo</p>
+                    <p className="text-[10px] text-slate-500">Capitão do Exército brasileiro</p>
                   </div>
                 </div>
               </div>
@@ -811,10 +811,10 @@ export default function App() {
                 </div>
                 <div>
                   <h4 className="font-display font-extrabold text-slate-850 text-base">
-                    Capitão de Carreira da Brigada Militar
+                    Capitão de Carreira do Exército brasileiro
                   </h4>
                   <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                    Anos de serviço dedicados à proteção de vidas e à manutenção da ordem pública. Forjado no respeito, disciplina operacional e autoridade legítima, conhece de perto a complexidade do policiamento e a necessidade de saúde mental para o policial.
+                    Anos de serviço dedicados à soberania nacional, proteção e manutenção da ordem. Forjado no respeito, disciplina operacional e autoridade legítima, traz a firmeza de princípios morais e cívicos essenciais para o desenvolvimento público do estado.
                   </p>
                 </div>
               </div>
@@ -1336,7 +1336,7 @@ export default function App() {
             </div>
             
             <a
-              href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20convidar%20o%20Capitão%20Macedo%20para%2520uma%2520visita%2520institucional/roda%2520de%2520chimarrão%2520na%2520minha%2520cidade!"
+              href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de convidar o Capitão Macedo para uma visita institucional ou roda de chimarrão na minha região!")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-3 bg-amber-600 hover:bg-amber-700 text-white font-display font-black text-xs uppercase tracking-wider rounded-xl shadow-xs hover:shadow-md smooth-transition flex items-center justify-center gap-2 shrink-0 w-full md:w-auto"
@@ -1408,7 +1408,7 @@ export default function App() {
                 <p className="text-xs text-slate-600 font-semibold flex flex-wrap items-center justify-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
                   <span>Dúvidas? Coordenação de Campanha:</span> 
-                  <a href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!" target="_blank" rel="noopener noreferrer" className="text-emerald-750 hover:text-emerald-600 underline font-bold inline-flex items-center gap-1">
+                  <a href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`} target="_blank" rel="noopener noreferrer" className="text-emerald-750 hover:text-emerald-600 underline font-bold inline-flex items-center gap-1">
                     <span>+55 51 9368-7702</span>
                   </a>
                 </p>
@@ -1682,7 +1682,7 @@ export default function App() {
         
         {/* Floating WhatsApp Card - Pulsing & Collapsible */}
         <a
-          href="https://wa.me/555193687702?text=Olá,%20gostaria%20de%20apoiar%20a%20campanha%20do%20Capitão%20Macedo!"
+          href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 bg-emerald-600 md:hover:bg-emerald-500 text-white font-extrabold px-4 py-3 rounded-full shadow-2xl md:hover:scale-105 transition-all duration-200 border border-emerald-500/25 ring-4 ring-emerald-500/15 group"

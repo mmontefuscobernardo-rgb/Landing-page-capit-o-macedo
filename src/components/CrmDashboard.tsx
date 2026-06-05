@@ -32,7 +32,7 @@ export default function CrmDashboard({ onClose }: CrmDashboardProps) {
   const [editStatus, setEditStatus] = useState<CRMStatus>("Novo Lead");
   const [editNotes, setEditNotes] = useState("");
 
-  const PIN_CRM = "macedo20"; // Secure PIN configured for the campaign team
+  const PIN_CRM = "MacedoProf2026!"; // Secure PIN configured for the campaign team
 
   const fetchLeads = async () => {
     setLoading(true);
@@ -55,7 +55,7 @@ export default function CrmDashboard({ onClose }: CrmDashboardProps) {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password.toLowerCase() === PIN_CRM) {
+    if (password === PIN_CRM || password.toLowerCase() === PIN_CRM.toLowerCase()) {
       setIsAuthenticated(true);
       setLoginError("");
     } else {
@@ -223,9 +223,7 @@ export default function CrmDashboard({ onClose }: CrmDashboardProps) {
               Entrar no Painel CRM
             </button>
             
-            <p className="text-center text-xs text-slate-400 mt-2">
-              Dica: O PIN padrão de demonstração para o avaliador é <strong className="text-slate-500">macedo20</strong>
-            </p>
+
           </form>
         </div>
       </div>
@@ -592,10 +590,7 @@ export default function CrmDashboard({ onClose }: CrmDashboardProps) {
                 Utilize o botão de exportar para baixar a planilha de contatos e subir nas suas ferramentas preferidas de envio do WhatsApp, de forma ordeira, em total conformidade com as regras da Justiça Eleitoral Brasileira.
               </p>
             </div>
-            <div className="bg-white px-3 py-2 rounded-lg border border-slate-200 text-center text-xs text-slate-600 self-stretch md:self-auto flex items-center justify-center gap-1.5">
-              <span>PIN do Painel:</span>
-              <code className="bg-slate-100 px-1.5 py-0.5 rounded font-mono font-bold text-slate-800">macedo20</code>
-            </div>
+
           </div>
 
         </div>

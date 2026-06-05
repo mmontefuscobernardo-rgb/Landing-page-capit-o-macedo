@@ -1,0 +1,59 @@
+{
+  "entities": {
+    "Lead": {
+      "title": "Lead",
+      "description": "Voter supporter registered through the webpage or entered by campaign team",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the lead"
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the supporter"
+        },
+        "email": {
+          "type": "string",
+          "description": "E-mail text format"
+        },
+        "whatsapp": {
+          "type": "string",
+          "description": "WhatsApp contact number with DDD"
+        },
+        "city": {
+          "type": "string",
+          "description": "City of residence in Rio Grande do Sul"
+        },
+        "bannertype": {
+          "type": "string",
+          "description": "Main segment of interest (Agro, Security, Health, Education)"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status inside the campaign pipeline (Novo Lead, Pendente, Apoiador Ativo, Arquivado)"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the contact was registered"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of latest state change"
+        }
+      },
+      "required": [
+        "name",
+        "status"
+      ]
+    }
+  },
+  "firestore": {
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Supporter registrations stored centrally in Firestore"
+    }
+  }
+}

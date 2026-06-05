@@ -2,14 +2,14 @@ import { LegislativeProject, ParliamentaryFront } from "./types";
 
 export const CANDIDATE_INFO = {
   name: "Capitão Macedo",
-  fullTitle: "Capitão Macedo - Professor, Militar e Produtor",
+  fullTitle: "Capitão Macedo - Capitão do Exército brasileiro e Professor",
   partyName: "PODEMOS",
   partyNumber: "20",
   state: "Rio Grande do Sul",
   office: "Deputado Estadual",
   tagline: "Seriedade para Ouvir, Coragem para Agir",
   slogan: "Uma vida de serviço, trabalho e compromisso com valores que se transformam em presença pública e ação concreta.",
-  biographyIntro: `A história de Aparecido Macedo, conhecido publicamente como Capitão Macedo, traz as marcas do interior, do trabalho e de uma formação construída com esforço, disciplina e constância. Filho de agricultores, cresceu na lavoura e uniu sua origem simples com carreiras marcantes: militar, professor universitário, profissional formado em Direito e Contabilidade, e homem público com trabalho comprovado no Rio Grande do Sul.`,
+  biographyIntro: `A história de Aparecido Macedo, conhecido publicamente como Capitão Macedo, traz as marcas do interior, do trabalho e de uma formação construída com esforço, disciplina e constância. Filho de agricultores, cresceu na lavoura e uniu sua origem simples com carreiras marcantes: Capitão do Exército brasileiro, professor universitário, profissional formado em Direito e Contabilidade, e homem público com trabalho comprovado no Rio Grande do Sul.`,
   pillars: [
     {
       title: "Origem no Campo",
@@ -20,7 +20,7 @@ export const CANDIDATE_INFO = {
     {
       title: "Carreira Militar",
       subtitle: "Força e Comando",
-      description: "Forjado na disciplina, lealdade e ordem da Brigada Militar como Capitão. Levou para a esfera pública a sobriedade, clareza de princípios e convicção de defesa da segurança dos cidadãos gaúchos.",
+      description: "Forjado na disciplina, lealdade e ordem do Exército brasileiro como Capitão. Levou para a esfera pública a sobriedade, clareza de princípios e convicção de defesa da segurança dos cidadãos gaúchos.",
       icon: "ShieldAlert"
     },
     {
