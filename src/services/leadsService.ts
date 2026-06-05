@@ -38,8 +38,6 @@ const SEED_LEADS: Lead[] = [
   }
 ];
 
-let serverOffline = false;
-
 // Helper to get local storage leads
 function getLocalLeads(): Lead[] {
   const data = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -61,42 +59,27 @@ function saveLocalLeads(leads: Lead[]) {
 
 export const leadsService = {
   async getLeads(): Promise<Lead[]> {
-    if (serverOffline) {
-      return getLocalLeads();
-    }
     try {
       const response = await fetch("/api/leads");
       const contentType = response.headers.get("content-type");
       if (!response.ok || !contentType || !contentType.includes("application/json")) {
-        console.warn("API was not OK or not JSON. Switching CRM to LocalStorage mode.");
-        serverOffline = true;
+        console.warn("API was not OK or not JSON. Using LocalStorage fallback.");
         return getLocalLeads();
       }
       const data = await response.json();
       if (!Array.isArray(data)) {
         throw new Error("Formato inválido recebido do servidor.");
       }
+      // Sync local storage cache mirror
+      saveLocalLeads(data);
       return data;
     } catch (e) {
       console.warn("Server API not available. Falling back to LocalStorage.", e);
-      serverOffline = true;
       return getLocalLeads();
     }
   },
 
   async addLead(leadData: { name: string; email: string; whatsapp: string; city: string; bannertype: string; notes: string }): Promise<Lead> {
-    if (serverOffline) {
-      const leads = getLocalLeads();
-      const newLead: Lead = {
-        id: "lead-" + Date.now() + "-" + Math.random().toString(36).substring(2, 6),
-        status: "Novo Lead",
-        createdAt: new Date().toISOString(),
-        ...leadData
-      };
-      leads.unshift(newLead);
-      saveLocalLeads(leads);
-      return newLead;
-    }
     try {
       const response = await fetch("/api/leads", {
         method: "POST",
@@ -107,33 +90,32 @@ export const leadsService = {
       });
       const contentType = response.headers.get("content-type");
       if (!response.ok || !contentType || !contentType.includes("application/json")) {
-        serverOffline = true;
-        return this.addLead(leadData); // retry recursively on fallback
+        throw new Error("Resposta inválida do servidor ao salvar contato.");
       }
-      return await response.json();
+      const savedLead = await response.json();
+      
+      // Mirror to local storage
+      const local = getLocalLeads();
+      local.unshift(savedLead);
+      saveLocalLeads(local);
+      
+      return savedLead;
     } catch (e) {
-      serverOffline = true;
-      return this.addLead(leadData);
+      console.warn("Server API error during save. Saving to LocalStorage.", e);
+      const local = getLocalLeads();
+      const newLead: Lead = {
+        id: "lead-" + Date.now() + "-" + Math.random().toString(36).substring(2, 6),
+        status: "Novo Lead",
+        createdAt: new Date().toISOString(),
+        ...leadData
+      };
+      local.unshift(newLead);
+      saveLocalLeads(local);
+      return newLead;
     }
   },
 
   async updateLead(id: string, updates: { status: CRMStatus; notes: string }): Promise<Lead> {
-    if (serverOffline) {
-      const leads = getLocalLeads();
-      const index = leads.findIndex((l) => l.id === id);
-      if (index === -1) {
-        throw new Error("Contato não encontrado.");
-      }
-      const updated: Lead = {
-        ...leads[index],
-        status: updates.status,
-        notes: updates.notes,
-        updatedAt: new Date().toISOString()
-      };
-      leads[index] = updated;
-      saveLocalLeads(leads);
-      return updated;
-    }
     try {
       const response = await fetch(`/api/leads/${id}`, {
         method: "PUT",
@@ -144,39 +126,55 @@ export const leadsService = {
       });
       const contentType = response.headers.get("content-type");
       if (!response.ok || !contentType || !contentType.includes("application/json")) {
-        serverOffline = true;
-        return this.updateLead(id, updates); // retry recursively on fallback
+        throw new Error("Resposta inválida do servidor ao atualizar contato.");
       }
-      return await response.json();
+      const updatedLead = await response.json();
+
+      // Mirror to local storage
+      const local = getLocalLeads();
+      const index = local.findIndex((l) => l.id === id);
+      if (index !== -1) {
+        local[index] = updatedLead;
+        saveLocalLeads(local);
+      }
+      
+      return updatedLead;
     } catch (e) {
-      serverOffline = true;
-      return this.updateLead(id, updates);
+      console.warn("Server API error during update. Updating LocalStorage.", e);
+      const local = getLocalLeads();
+      const index = local.findIndex((l) => l.id === id);
+      if (index === -1) {
+        throw new Error("Contato não encontrado.");
+      }
+      const updated: Lead = {
+        ...local[index],
+        status: updates.status,
+        notes: updates.notes,
+        updatedAt: new Date().toISOString()
+      };
+      local[index] = updated;
+      saveLocalLeads(local);
+      return updated;
     }
   },
 
   async deleteLead(id: string): Promise<void> {
-    if (serverOffline) {
-      const leads = getLocalLeads();
-      const filtered = leads.filter((l) => l.id !== id);
-      saveLocalLeads(filtered);
-      return;
-    }
     try {
       const response = await fetch(`/api/leads/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          serverOffline = true;
-          return this.deleteLead(id); // retry recursively on fallback
-        }
-        const errData = await response.json();
-        throw new Error(errData?.error || "Erro ao excluir contato.");
+        throw new Error("Resposta do servidor inválida ao excluir contato.");
       }
+      // Mirror to local storage
+      const local = getLocalLeads();
+      const filtered = local.filter((l) => l.id !== id);
+      saveLocalLeads(filtered);
     } catch (e) {
-      serverOffline = true;
-      return this.deleteLead(id);
+      console.warn("Server API error during delete. Deleting from LocalStorage.", e);
+      const local = getLocalLeads();
+      const filtered = local.filter((l) => l.id !== id);
+      saveLocalLeads(filtered);
     }
   }
 };

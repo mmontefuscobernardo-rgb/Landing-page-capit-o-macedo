@@ -101,14 +101,31 @@ let dbInstance: any = null;
 function getDb() {
   if (!dbInstance) {
     try {
-      const firebaseConfigPath = path.join(process.cwd(), "firebase-applet-config.json");
-      if (fs.existsSync(firebaseConfigPath)) {
-        const firebaseConfig = JSON.parse(fs.readFileSync(firebaseConfigPath, "utf-8"));
+      // 1. Try loading from Environment variables (safe for GitHub/Vercel)
+      if (process.env.FIREBASE_API_KEY) {
+        const firebaseConfig = {
+          apiKey: process.env.FIREBASE_API_KEY,
+          authDomain: process.env.FIREBASE_AUTH_DOMAIN || `${process.env.FIREBASE_PROJECT_ID}.firebaseapp.com`,
+          projectId: process.env.FIREBASE_PROJECT_ID,
+          storageBucket: process.env.FIREBASE_STORAGE_BUCKET || `${process.env.FIREBASE_PROJECT_ID}.firebasestorage.app`,
+          messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+          appId: process.env.FIREBASE_APP_ID,
+          firestoreDatabaseId: process.env.FIREBASE_FIRESTORE_DATABASE_ID || "ai-studio-725ada00-eb33-4115-832a-a3b7fdb67fb7"
+        };
         const app = initializeApp(firebaseConfig);
         dbInstance = getFirestore(app, firebaseConfig.firestoreDatabaseId);
-        console.log("Firebase connection established on database:", firebaseConfig.firestoreDatabaseId);
+        console.log("Firebase connection established via Environment Variables on database:", firebaseConfig.firestoreDatabaseId);
       } else {
-        console.warn("firebase-applet-config.json file is absent. Using local fallback.");
+        // 2. Fallback to local server config file
+        const firebaseConfigPath = path.join(process.cwd(), "firebase-applet-config.json");
+        if (fs.existsSync(firebaseConfigPath)) {
+          const firebaseConfig = JSON.parse(fs.readFileSync(firebaseConfigPath, "utf-8"));
+          const app = initializeApp(firebaseConfig);
+          dbInstance = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+          console.log("Firebase connection established on database:", firebaseConfig.firestoreDatabaseId);
+        } else {
+          console.warn("firebase-applet-config.json file is absent. Using local fallback.");
+        }
       }
     } catch (err) {
       console.error("Firebase startup lookup failed:", err);

@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import { Lead, LegislativeProject, ParliamentaryFront } from "./types";
 import { CANDIDATE_INFO, LEGISLATIVE_PROJECTS, PARLIAMENTARY_FRONTS, MUNICIPALITIES_SERVED, CAMPAIGN_FLAGS } from "./data";
-import CrmDashboard from "./components/CrmDashboard";
 import { leadsService } from "./services/leadsService";
 
 // Import/define candidate campaign portrait from public directory for reliable static hosting (Vercel)
@@ -64,9 +63,7 @@ export default function App() {
   const [submitting, setSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
-
-  // CRM access state
-  const [isCrmOpen, setIsCrmOpen] = useState(false);
+  const [whatsappRedirectUrl, setWhatsappRedirectUrl] = useState("");
 
   // Suggestion Improvements State: Interactive Dairy (Milk) Chain Simulator
   const [milkSimulatorMode, setMilkSimulatorMode] = useState<"gaucho" | "estrangeiro">("gaucho");
@@ -86,7 +83,7 @@ export default function App() {
     setFormPhone(formatted);
   };
 
-  // Submit Lead via leadsService (handles local storage fallback on static environments)
+  // Submit Lead to format a custom message and redirect/prepare for WhatsApp
   const handleSubmitLead = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
@@ -105,6 +102,19 @@ export default function App() {
       return;
     }
 
+    const message = `Olá Capitão Macedo! Gostaria de apoiar a caminhada da pré-campanha. Aqui estão minhas respostas para a pesquisa:\n\n` +
+      `👤 *Nome:* ${formName}\n` +
+      `📞 *WhatsApp:* ${formPhone || "Não informado"}\n` +
+      `✉️ *E-mail:* ${formEmail || "Não informado"}\n` +
+      `📍 *Cidade de Votação:* ${formCity}\n` +
+      `🚩 *Bandeira que Apoio:* ${formBanner}\n` +
+      (formOpinion.trim() ? `💬 *Desafio/Necessidade da Região:* ${formOpinion}` : "");
+
+    const encodedText = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/555193687702?text=${encodedText}`;
+    setWhatsappRedirectUrl(whatsappUrl);
+
+    // Save silently on local storage as local register backup
     try {
       await leadsService.addLead({
         name: formName,
@@ -112,20 +122,21 @@ export default function App() {
         whatsapp: formPhone,
         city: formCity,
         bannertype: formBanner,
-        notes: formOpinion || "Cadastro voluntário via Landing Page."
+        notes: formOpinion || "Redirecionamento para o WhatsApp."
       });
-
-      setSubmitSuccess(true);
-      // Clear form
-      setFormName("");
-      setFormEmail("");
-      setFormPhone("");
-      setFormOpinion("");
-    } catch (err: any) {
-      setSubmitError(err?.message || "Algo deu errado ao processar seu cadastro. Tente novamente.");
-    } finally {
-      setSubmitting(false);
+    } catch (silentErr) {
+      console.warn("Silent local backup skip:", silentErr);
     }
+
+    // Try opening the window automatically
+    try {
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    } catch (popupErr) {
+      console.warn("Popup block detected, user should click the prominent WhatsApp button instead:", popupErr);
+    }
+
+    setSubmitSuccess(true);
+    setSubmitting(false);
   };
 
   // Filter project categories
@@ -227,14 +238,6 @@ export default function App() {
                 <Facebook className="w-4.5 h-4.5" />
               </a>
             </div>
-            <button
-              onClick={() => setIsCrmOpen(true)}
-              className="px-3.5 py-1.5 border border-slate-700 hover:border-rs-yellow text-slate-300 hover:text-rs-yellow rounded-lg text-xs font-semibold flex items-center gap-1.5 smooth-transition"
-              id="btn-nav-crm-trigger"
-            >
-              <Shield className="w-3.5 h-3.5 text-rs-yellow" />
-              CRM Administrativo
-            </button>
             <a
               href="#captura"
               className="px-4 py-2 bg-rs-yellow hover:bg-white text-podemos-dark font-display font-extrabold rounded-lg text-xs tracking-wider uppercase shadow-md hover:shadow-lg smooth-transition"
@@ -375,10 +378,10 @@ export default function App() {
                <button
                  onClick={() => {
                    setMobileMenuOpen(false);
-                   setIsCrmOpen(true);
+                   // removed
                  }}
                  className="w-full py-3 border border-slate-700 text-slate-300 hover:text-rs-yellow hover:border-rs-yellow rounded-xl text-sm font-semibold flex items-center justify-center gap-2 smooth-transition"
-                 id="btn-drawer-crm"
+                 style={{ display: 'none' }} id="btn-drawer-crm"
                >
                  <Shield className="w-4 h-4 text-rs-yellow" />
                  Painel CRM da Campanha
@@ -1434,17 +1437,33 @@ export default function App() {
                   <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
                     <Check className="w-6 h-6 stroke-3" />
                   </div>
-                  <h4 className="font-display font-black text-xl text-emerald-950">Cadastro Concluído!</h4>
-                  <p className="text-xs leading-relaxed max-w-sm mx-auto">
-                    Obrigado por apoiar a caminhada do <strong>Capitão Macedo</strong>. Seus dados e opinião sobre sua cidade foram computados no nosso sistema CRM de campanha. Em breve nossa equipe entrará em contato!
+                  <h4 className="font-display font-black text-xl text-emerald-950">Quase lá! Envie pelo WhatsApp</h4>
+                  <p className="text-xs leading-relaxed max-w-sm mx-auto text-slate-600 font-medium font-sans">
+                    Sua pesquisa foi gerada com sucesso! Para validar e enviar sua opinião diretamente para a nossa coordenação de campanha, clique no botão de WhatsApp abaixo.
                   </p>
                   
-                  <div className="pt-4">
-                    <button
-                      onClick={() => setSubmitSuccess(false)}
-                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold smooth-transition"
+                  <div className="pt-4 flex flex-col justify-center gap-3 max-w-xs mx-auto">
+                    <a
+                      href={whatsappRedirectUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs inline-flex items-center gap-2 justify-center shadow-lg hover:shadow-xl smooth-transition focus:ring-4 focus:ring-emerald-500/25"
                     >
-                      Realizar Novo Cadastro
+                      <MessageCircle className="w-4.5 h-4.5 text-white" />
+                      <span>ENVIAR NO WHATSAPP</span>
+                    </a>
+                    
+                    <button
+                      onClick={() => {
+                        setSubmitSuccess(false);
+                        setFormName("");
+                        setFormEmail("");
+                        setFormPhone("");
+                        setFormOpinion("");
+                      }}
+                      className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-755 rounded-lg text-xs font-bold smooth-transition"
+                    >
+                      Preencher Novamente
                     </button>
                   </div>
                 </div>
@@ -1651,9 +1670,9 @@ export default function App() {
              </div>
 
              <button
-               onClick={() => setIsCrmOpen(true)}
+               onClick={() => {}}
                className="px-4 py-2 bg-slate-800 hover:bg-slate-750 text-slate-100 hover:text-rs-yellow border border-slate-700 rounded-xl font-semibold flex items-center gap-2 smooth-transition shadow-inner"
-               id="btn-footer-crm-trigger"
+               style={{ display: 'none' }} id="btn-footer-crm-trigger"
              >
                <Shield className="w-4 h-4 text-rs-yellow" />
                Acesso Equipe - CRM
@@ -1672,10 +1691,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* 11. CRM MODAL ON TOP IF OPENED */}
-      {isCrmOpen && (
-        <CrmDashboard onClose={() => setIsCrmOpen(false)} />
-      )}
+      {/* 11. SUBMITTED STATUS CONTROL END */}
 
       {/* 12. FLOATING CAMPAIGN WIDGET (STUNNING MOBILE EXPERIENCE) */}
       <div className="fixed bottom-4 right-4 z-45 flex flex-col items-end gap-2.5 max-w-xs font-sans">
