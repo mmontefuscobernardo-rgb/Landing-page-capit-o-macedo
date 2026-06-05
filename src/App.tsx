@@ -12,7 +12,7 @@ import CrmDashboard from "./components/CrmDashboard";
 import { leadsService } from "./services/leadsService";
 
 // Import/define candidate campaign portrait from public directory for reliable static hosting (Vercel)
-const candidateImage = "/capitao_macedo_correto.png";
+const candidateImage = "/capitao_macedo.jpg";
 
 // Inline Custom SVG for the "Podemos 20 RS" Logo (Matches user attachment)
 function PodemosRsLogo({ className = "w-10 h-10" }: { className?: string }) {
@@ -835,7 +835,7 @@ export default function App() {
                     </span>
                   </div>
                   <p className="text-xs text-slate-700 leading-relaxed">
-                    Formado em duas faculdades cruciais — <strong>Direito</strong> e <strong>Contabilidade</strong> —, o Professor Aparecido Macedo alia profundo conhecimento técnico e fiscal à experiência prática de vida para legislar com responsabilidade e coerência financeira.
+                    Formado em duas faculdades cruciais — <strong>Direito</strong> e <strong>Contabilidade</strong> —, Aparecido Macedo alia profundo conhecimento técnico e fiscal à experiência prática de vida para legislar com responsabilidade e coerência financeira.
                   </p>
                   <p className="text-xs text-slate-600 leading-relaxed font-semibold bg-[#004D8C]/5 border-l-2 border-[#004D8C] p-2.5 rounded-r bg-opacity-40">
                     Como professor universitário de nível superior, dedicou mais de uma década instruindo novas gerações. Defende firmemente que o parlamento precisa de cabeças técnicas preparadas, não de meros discursos vazios. Foca no fomento de <strong>Escolas Técnicas Profissionalizantes</strong> de nível secundário e superior para fixar nossa juventude no interior de forma qualificada.
