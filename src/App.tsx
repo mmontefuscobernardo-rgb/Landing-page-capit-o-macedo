@@ -111,7 +111,7 @@ export default function App() {
       (formOpinion.trim() ? `💬 *Desafio/Necessidade da Região:* ${formOpinion}` : "");
 
     const encodedText = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/555193687702?text=${encodedText}`;
+    const whatsappUrl = `https://wa.me/555192878738?text=${encodedText}`;
     setWhatsappRedirectUrl(whatsappUrl);
 
     // Save silently on local storage as local register backup
@@ -174,7 +174,7 @@ export default function App() {
           Vaquinha Coletiva
         </span>
         <span className="text-slate-950 font-sans tracking-tight">
-          Apoie nossa caminhada participando de nossa Vaquinha Online! Coordenação de Campanha: <a href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-800 font-extrabold">+55 51 9368-7702</a>
+          Apoie nossa caminhada participando de nossa Vaquinha Online! Coordenação de Campanha: <a href={`https://wa.me/555192878738?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-800 font-extrabold">+55 51 9287-8738</a>
         </span>
         <a 
           href="https://queroapoiar.com.br/capitaomacedoprofessor?fbclid=IwdGRzaASMf5ljbGNrBIx_hWV4dG4DYWVtAjExAHNydGMGYXBwX2lkDDM1MDY4NTUzMTcyOAABHl4MY0buUyGOpL2aN-k7ISvslZlWA_0AIDR8bGofEkJD-rKrLoqt_PjdTsLS_aem_5EjP02OShasPiH3tRzfWtA&sfnsn=wiwspwa"
@@ -331,7 +331,7 @@ export default function App() {
                   <DollarSign className="w-4 h-4 text-rs-yellow group-hover:text-slate-900 smooth-transition" />
                 </a>
                 <a 
-                  href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`}
+                  href={`https://wa.me/555192878738?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileMenuOpen(false)}
@@ -658,17 +658,17 @@ export default function App() {
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0"></div>
                   <div className="text-[11px] text-emerald-800 leading-snug font-normal">
                     <strong className="block font-bold">Coordenação de Campanha</strong>
-                    WhatsApp direto de atendimento ao apoiador gaúcho: +55 51 9368-7702
+                    WhatsApp direto de atendimento ao apoiador gaúcho: +55 51 9287-8738
                   </div>
                 </div>
                 <a
-                  href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`}
+                  href={`https://wa.me/555192878738?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-display font-black text-xs uppercase tracking-wider rounded-xl text-center shadow-sm hover:shadow smooth-transition flex justify-center items-center gap-2"
                 >
                   <MessageCircle className="w-5 h-5 shrink-0" />
-                  Chamar no WhatsApp (+55 51 9368-7702)
+                  Chamar no WhatsApp (+55 51 9287-8738)
                 </a>
               </div>
             </div>
@@ -1339,7 +1339,7 @@ export default function App() {
             </div>
             
             <a
-              href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de convidar o Capitão Macedo para uma visita institucional ou roda de chimarrão na minha região!")}`}
+              href={`https://wa.me/555192878738?text=${encodeURIComponent("Olá! Gostaria de convidar o Capitão Macedo para uma visita institucional ou roda de chimarrão na minha região!")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-3 bg-amber-600 hover:bg-amber-700 text-white font-display font-black text-xs uppercase tracking-wider rounded-xl shadow-xs hover:shadow-md smooth-transition flex items-center justify-center gap-2 shrink-0 w-full md:w-auto"
@@ -1411,8 +1411,8 @@ export default function App() {
                 <p className="text-xs text-slate-600 font-semibold flex flex-wrap items-center justify-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
                   <span>Dúvidas? Coordenação de Campanha:</span> 
-                  <a href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`} target="_blank" rel="noopener noreferrer" className="text-emerald-750 hover:text-emerald-600 underline font-bold inline-flex items-center gap-1">
-                    <span>+55 51 9368-7702</span>
+                  <a href={`https://wa.me/555192878738?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`} target="_blank" rel="noopener noreferrer" className="text-emerald-750 hover:text-emerald-600 underline font-bold inline-flex items-center gap-1">
+                    <span>+55 51 9287-8738</span>
                   </a>
                 </p>
                 <div className="text-[10px] text-slate-400 border-t border-slate-200 pt-2 font-normal">
@@ -1698,7 +1698,7 @@ export default function App() {
         
         {/* Floating WhatsApp Card - Pulsing & Collapsible */}
         <a
-          href={`https://wa.me/555193687702?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`}
+          href={`https://wa.me/555192878738?text=${encodeURIComponent("Olá! Gostaria de apoiar a campanha do Capitão Macedo.")}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 bg-emerald-600 md:hover:bg-emerald-500 text-white font-extrabold px-4 py-3 rounded-full shadow-2xl md:hover:scale-105 transition-all duration-200 border border-emerald-500/25 ring-4 ring-emerald-500/15 group"
